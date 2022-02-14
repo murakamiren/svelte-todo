@@ -6,3 +6,5 @@ module.exports = {
 	plugins: [],
 	darkMode: "class",
 };
+
+// require("@tailwindcss/forms")
