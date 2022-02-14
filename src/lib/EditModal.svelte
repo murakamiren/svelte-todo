@@ -1,9 +1,7 @@
 <script lang="ts">
-	import { isModalOpen, modalSty, savedTodoNum } from "../store/toggleModal";
+	import { isModalOpen, modalSty, savedTodoNum, whichCloseBtn } from "../store/toggleModal";
 
 	import { todoInputStore } from "../store/todoInput";
-
-	let beforeEditVal = $todoInputStore;
 
 	const handleModal = () => {
 		if ($isModalOpen) {
@@ -15,20 +13,20 @@
 
 	const modalClose = () => {
 		isModalOpen.set(false);
-		savedTodoNum.set(null);
-		todoInputStore.set(beforeEditVal);
+		whichCloseBtn.set("cancel");
 		handleModal();
 	};
 
 	const modalCloseWithSave = () => {
 		isModalOpen.set(false);
+		whichCloseBtn.set("save");
 		handleModal();
 	};
 </script>
 
 <div class={$modalSty}>
 	<div class="bg-neutral-600 w-screen h-screen opacity-70 absolute" />
-	<div class="border rounded w-8/12 h-fit absolute top-0 left-0 bottom-0 right-0 m-auto bg-white z-30 opacity-100">
+	<div class="border rounded-lg w-8/12 h-fit absolute top-0 left-0 bottom-0 right-0 m-auto bg-white z-30 opacity-100">
 		<p class="text-xl font-semibold uppercase text-neutral-700 p-4">edit todo</p>
 		<div class="px-8 border-y flex flex-col py-16">
 			<p class="text-neutral-700">change this todo:</p>

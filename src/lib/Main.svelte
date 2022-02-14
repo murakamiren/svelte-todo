@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { isModalOpen, modalSty, savedTodoNum } from "../store/toggleModal";
+	import { isModalOpen, modalSty, savedTodoNum, whichCloseBtn } from "../store/toggleModal";
 
 	import { todoInputStore } from "../store/todoInput";
 
@@ -48,12 +48,18 @@
 		}
 	};
 
-	isModalOpen.subscribe(() => {
+	whichCloseBtn.subscribe(() => {
 		if (todoList.length === 0) {
 			// do nothing
 		} else {
-			console.log("a");
-			saveEditTodo();
+			if ($whichCloseBtn === "save") {
+				console.log("save");
+				saveEditTodo();
+				whichCloseBtn.set("");
+			} else {
+				console.log("cancel");
+				whichCloseBtn.set("");
+			}
 		}
 	});
 </script>
