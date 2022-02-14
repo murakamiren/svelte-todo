@@ -1,4 +1,8 @@
 <script lang="ts">
+	import { isModalOpen, modalSty, savedTodoNum } from "../store/toggleModal";
+
+	import { todoInputStore } from "../store/todoInput";
+
 	import Todos from "./Todos.svelte";
 
 	type todoListType = {
@@ -25,6 +29,33 @@
 		aftertodos.splice(i, 1);
 		todoList = [...aftertodos];
 	};
+
+	const handleEdit = (i: number) => {
+		todoInputStore.update(() => todoList[i].txt);
+		savedTodoNum.update(() => i);
+		isModalOpen.update(() => true);
+		modalSty.update(() => "");
+		console.log(todoInputStore, isModalOpen);
+	};
+
+	const saveEditTodo = () => {
+		if ($isModalOpen) {
+			// do nothing
+		} else {
+			let beforeEdit = todoList;
+			beforeEdit[$savedTodoNum].txt = $todoInputStore;
+			todoList = [...beforeEdit];
+		}
+	};
+
+	isModalOpen.subscribe(() => {
+		if (todoList.length === 0) {
+			// do nothing
+		} else {
+			console.log("a");
+			saveEditTodo();
+		}
+	});
 </script>
 
 <main>
@@ -47,7 +78,7 @@
 				<p class="text-emerald-500 text-2xl text-center uppercase font-semibold">there is no task!</p>
 			{:else}
 				{#each todoList as todo, i (todo.id)}
-					<Todos todoName={todo.txt} handleRemove={() => handleRemove(i)} />
+					<Todos todoName={todo.txt} handleRemove={() => handleRemove(i)} handleEdit={() => handleEdit(i)} />
 				{/each}
 			{/if}
 		</div>

@@ -1,9 +1,7 @@
 <script lang="ts">
-	import Header from "./lib/Header.svelte";
-	import Main from "./lib/Main.svelte";
+	import View from "./lib/View.svelte";
 	import Tailwindcss from "./Tailwindcss.svelte";
 </script>
 
 <Tailwindcss />
-<Header />
-<Main />
+<View />

@@ -1,6 +1,7 @@
 <script lang="ts">
 	export let todoName: string;
 	export let handleRemove;
+	export let handleEdit;
 
 	let isDone: boolean = false;
 
@@ -41,6 +42,7 @@
 	{#if !isDone}
 		<button
 			class="shrink-0 py-2 px-4 border rounded text-emerald-500 shadow hover:text-white hover:bg-emerald-500 transition ease-out"
+			on:click={handleEdit}
 		>
 			edit
 		</button>
