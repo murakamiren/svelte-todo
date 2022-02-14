@@ -41,6 +41,12 @@
 			isDoneStyle = undoneStyle;
 		}
 	};
+
+	const handleRemove = (i: number) => {
+		let aftertodos = todoList;
+		aftertodos.splice(i, 1);
+		todoList = [...aftertodos];
+	};
 </script>
 
 <main>
@@ -62,13 +68,13 @@
 			{#if todoList.length === 0}
 				<p class="text-emerald-500 text-2xl text-center uppercase font-semibold">there is no task!</p>
 			{:else}
-				{#each todoList as todo}
+				{#each todoList as todo, i}
 					<div class="w-full flex mb-4">
 						<p class={isDoneStyle.p}>{todo}</p>
 						<button class={isDoneStyle.doneBtn} on:click={handleIsDone}>{isDoneStyle.text}</button>
 						<button
 							class="shrink-0 py-2 px-4 border rounded text-red-500 shadow hover:text-white hover:bg-red-500 transition ease-out"
-							>remove</button
+							on:click={() => handleRemove(i)}>remove</button
 						>
 					</div>
 				{/each}
