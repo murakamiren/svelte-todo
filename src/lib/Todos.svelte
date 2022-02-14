@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { fly } from "svelte/transition";
+
 	export let todoName: string;
 	export let handleRemove;
 	export let handleEdit;
@@ -36,7 +38,7 @@
 	};
 </script>
 
-<div class="w-full flex mb-4">
+<div class="w-full flex mb-4" transition:fly={{ x: 200 }}>
 	<p class={isDoneStyle.p}>{todoName}</p>
 	<button class={isDoneStyle.doneBtn} on:click={handleIsDone}>{isDoneStyle.text}</button>
 	{#if !isDone}

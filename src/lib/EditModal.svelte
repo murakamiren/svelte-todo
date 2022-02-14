@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { isModalOpen, modalSty, savedTodoNum, whichCloseBtn } from "../store/toggleModal";
+	import { isModalOpen, modalSty, whichCloseBtn } from "../store/toggleModal";
 
 	import { todoInputStore } from "../store/todoInput";
 
