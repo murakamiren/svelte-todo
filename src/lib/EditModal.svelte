@@ -3,6 +3,8 @@
 
 	import { todoInputStore } from "../store/todoInput";
 
+	let isFill: boolean = true;
+
 	const handleModal = () => {
 		if ($isModalOpen) {
 			modalSty.update(() => "");
@@ -18,9 +20,14 @@
 	};
 
 	const modalCloseWithSave = () => {
-		isModalOpen.set(false);
-		whichCloseBtn.set("save");
-		handleModal();
+		if ($todoInputStore === "") {
+			isFill = false;
+		} else {
+			isFill = true;
+			isModalOpen.set(false);
+			whichCloseBtn.set("save");
+			handleModal();
+		}
 	};
 </script>
 
@@ -35,6 +42,9 @@
 				class="appearance-none border rounded w-full py-2 px-3 text-gray-500 shadow mr-4 outline-none focus:border-cyan-500 focus:border-2 focus:outline-none"
 				bind:value={$todoInputStore}
 			/>
+			{#if !isFill}
+				<p class="text-red-500 w-8/12 text-sm">you need to fill the form to edit task!</p>
+			{/if}
 		</div>
 		<div class="flex p-4 py-8">
 			<button
