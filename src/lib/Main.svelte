@@ -8,6 +8,7 @@
 	type todoListType = {
 		id: number;
 		txt: string;
+		isDone: boolean;
 	};
 
 	let todoList: todoListType[] = [];
@@ -15,10 +16,10 @@
 
 	const handleSubmit = () => {
 		if (todoList.length === 0) {
-			todoList = [...todoList, { id: 1, txt: todoInput }];
+			todoList = [...todoList, { id: 1, txt: todoInput, isDone: false }];
 		} else {
 			const lastTodoId: number = todoList.slice(-1)[0].id;
-			todoList = [...todoList, { id: lastTodoId + 1, txt: todoInput }];
+			todoList = [...todoList, { id: lastTodoId + 1, txt: todoInput, isDone: false }];
 		}
 		todoInput = "";
 		localStorage.setItem("todoList", JSON.stringify(todoList));
@@ -30,6 +31,18 @@
 		aftertodos.splice(i, 1);
 		todoList = [...aftertodos];
 		localStorage.setItem("todoList", JSON.stringify(todoList));
+	};
+
+	const isDoneChange = (i: number) => {
+		let beforeIsDone = todoList;
+		if (beforeIsDone[i].isDone) {
+			beforeIsDone[i].isDone = false;
+		} else {
+			beforeIsDone[i].isDone = true;
+		}
+		todoList = [...beforeIsDone];
+		localStorage.setItem("todoList", JSON.stringify(todoList));
+		console.log(todoList);
 	};
 
 	const handleEdit = (i: number) => {
@@ -95,7 +108,13 @@
 				<p class="text-emerald-500 text-2xl text-center uppercase font-semibold">there is no task!</p>
 			{:else}
 				{#each todoList as todo, i (todo.id)}
-					<Todos todoName={todo.txt} handleRemove={() => handleRemove(i)} handleEdit={() => handleEdit(i)} />
+					<Todos
+						todoName={todo.txt}
+						handleRemove={() => handleRemove(i)}
+						handleEdit={() => handleEdit(i)}
+						isDone={todo.isDone}
+						isDoneChange={() => isDoneChange(i)}
+					/>
 				{/each}
 			{/if}
 		</div>

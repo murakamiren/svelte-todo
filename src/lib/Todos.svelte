@@ -4,8 +4,9 @@
 	export let todoName: string;
 	export let handleRemove;
 	export let handleEdit;
+	export let isDoneChange;
 
-	let isDone: boolean = false;
+	export let isDone: boolean;
 
 	type todoStyles = {
 		text: string;
@@ -25,22 +26,16 @@
 		doneBtn:
 			"shrink-0 py-2 px-4 mx-2 border rounded text-gray-500 shadow hover:text-white hover:bg-gray-500  transition ease-out",
 	};
-
-	let isDoneStyle = undoneStyle;
-
-	const handleIsDone = () => {
-		isDone = !isDone;
-		if (isDone) {
-			isDoneStyle = doneStyle;
-		} else {
-			isDoneStyle = undoneStyle;
-		}
-	};
 </script>
 
 <div class="w-full flex mb-4" transition:fly={{ x: 200 }}>
-	<p class={isDoneStyle.p}>{todoName}</p>
-	<button class={isDoneStyle.doneBtn} on:click={handleIsDone}>{isDoneStyle.text}</button>
+	<p class={isDone ? doneStyle.p : undoneStyle.p}>{todoName}</p>
+	<button
+		class={isDone ? doneStyle.doneBtn : undoneStyle.doneBtn}
+		on:click={() => {
+			isDoneChange();
+		}}>{isDone ? doneStyle.text : undoneStyle.text}</button
+	>
 	{#if !isDone}
 		<button
 			class="shrink-0 py-2 px-4 border rounded text-emerald-500 shadow hover:text-white hover:bg-emerald-500 transition ease-out"
