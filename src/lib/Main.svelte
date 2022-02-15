@@ -21,6 +21,7 @@
 			todoList = [...todoList, { id: lastTodoId + 1, txt: todoInput }];
 		}
 		todoInput = "";
+		localStorage.setItem("todoList", JSON.stringify(todoList));
 		console.log(todoList);
 	};
 
@@ -28,6 +29,7 @@
 		let aftertodos = todoList;
 		aftertodos.splice(i, 1);
 		todoList = [...aftertodos];
+		localStorage.setItem("todoList", JSON.stringify(todoList));
 	};
 
 	const handleEdit = (i: number) => {
@@ -45,6 +47,7 @@
 			let beforeEdit = todoList;
 			beforeEdit[$savedTodoNum].txt = $todoInputStore;
 			todoList = [...beforeEdit];
+			localStorage.setItem("todoList", JSON.stringify(todoList));
 		}
 	};
 
@@ -62,6 +65,14 @@
 			}
 		}
 	});
+
+	const getTodosFromLocal = () => {
+		const savedTodos = localStorage.getItem("todoList");
+		const savedTodosParse = JSON.parse(savedTodos);
+		todoList = savedTodosParse;
+	};
+
+	window.onload = getTodosFromLocal;
 </script>
 
 <main>
