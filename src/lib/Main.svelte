@@ -41,6 +41,7 @@
 		aftertodos.splice(i, 1);
 		todoList = [...aftertodos];
 		localStorage.setItem("todoList", JSON.stringify(todoList));
+		unDoneTodoList = todoList.filter((todo) => todo.isDone === false);
 	};
 
 	const isDoneChange = (i: number) => {
@@ -52,6 +53,8 @@
 		}
 		todoList = [...beforeIsDone];
 		localStorage.setItem("todoList", JSON.stringify(todoList));
+		doneTodoList = todoList.filter((todo) => todo.isDone === true);
+		unDoneTodoList = todoList.filter((todo) => todo.isDone === false);
 		console.log(todoList);
 	};
 
@@ -79,6 +82,7 @@
 			beforeEdit[$savedTodoNum].txt = $todoInputStore;
 			todoList = [...beforeEdit];
 			localStorage.setItem("todoList", JSON.stringify(todoList));
+			doneTodoList = todoList.filter((todo) => todo.isDone === true);
 		}
 	};
 
@@ -155,7 +159,7 @@
 						handleRemove={() => handleRemove(i)}
 						handleEdit={() => handleEdit(i)}
 						isDone={todo.isDone}
-						isDoneChange={() => isDoneChange(i)}
+						isDoneChange={() => isDoneChange(todo.id - 1)}
 					/>
 				{/each}
 			{:else if selected === "not done"}
@@ -165,7 +169,7 @@
 						handleRemove={() => handleRemove(i)}
 						handleEdit={() => handleEdit(i)}
 						isDone={todo.isDone}
-						isDoneChange={() => isDoneChange(i)}
+						isDoneChange={() => isDoneChange(todo.id - 1)}
 					/>
 				{/each}
 			{/if}
